@@ -24,14 +24,14 @@ possono ineressare e piacere alll'utente in modo da rendere più facile la navig
 
 
 ### Descrizione della soluzione proposta
-In questo progetto ci siamo concentrati sulle tecniche di filtrazione basata su contenuti; in particolar modo su tecniche di analisi del linguaggio naturale basandoci sulle descrizioni testuali della trama dei film o delle serie e dei metadati correlati ad essi.
+In questo progetto mi sono concentrato sulle tecniche di filtrazione basate su contenuti; in particolar modo su tecniche di analisi del linguaggio naturale delle descrizioni testuali della trama dei film o delle serie e dei metadati correlati ad essi.
 
-Nello specifico utilizziamo modelli a conta per estrarre dei vettori semantici dalle descrizioni e dai metadati, confrontando poi il vettore ottenuto dai contenuti visualizzati e piaciuti all'utente con i vettori dei contenuti presenti nella libreria, consigliando poi quelli con una similarità maggiore.
-Per confontare i vettori calcoliamo la coseno-similarità tra gli stessi, valore compreso tra zero e uno, a valori maggiori corrisponde una maggior somiglianza tra i vettori e quindi tra i contenuti corrispondenti.
+Nello specifico vengono usati dei modelli a conta per estrarre i vettori semantici dalle descrizioni e dai metadati, confrontando poi il vettore ottenuto dai contenuti visualizzati e piaciuti all'utente con i vettori dei contenuti presenti nella libreria, consigliando poi quelli con una similarità maggiore.
+Per confontare i vettori si calcola la coseno-similarità tra gli stessi, valore compreso tra zero e uno, a valori maggiori corrisponde una maggior somiglianza tra i vettori e quindi tra i contenuti corrispondenti.
 
 ### Revisione della letteratura
-L'Approccio al problema è cambiato nel tempo, e da algoritmi semplici, si è passato all'analisi dei grafi su web semantico, fino ad arrivare oggi all'implementazione di intelligenze artificiali in grado di comprendere i contenuti che potrebbero interessare un utente.
-Interessati da questo problema, ci siamo cimentati nell'implementare un reccomender basato su Machine Learning in Python.
+L'Approccio al problema storicamente è cambiato nel tempo, e da algoritmi semplici, si è passato all'analisi dei grafi su web semantico, fino ad arrivare oggi all'implementazione di intelligenze artificiali in grado di comprendere i contenuti che potrebbero interessare un utente.
+Interessati da questo problema, mi sono cimentato nell'implementare un reccomender basato su Machine Learning in Python.
 Ci sono principalmente tre tecniche utilizzate:
 
  - **Filtro demografico**: Le raccomandazioni sono le stesse per ogni utente. Sono generiche e non personalizzate
@@ -42,7 +42,7 @@ Ci sono principalmente tre tecniche utilizzate:
 Per presentare i risultati ottenuti andremo ad analizzare un ciclo di esecuzione del software:
 Andiamo a vedere i risultati per il celebre e conosciuto film UP (Disney Pixar).
 
-Andiamo ad analizzare la correttezza dei risultati. Le trame e i dati sono presi da TMDB in italiano. Sono le traduzioni delle trame che troviamo nel nostro dataset.
+Andiamo ad analizzare la correttezza dei risultati. Le trame e i dati in questa documentazione sono presi da TMDB in italiano. Sono le traduzioni ufficiali delle trame (in inglese) che troviamo nel dataset usato per calcolare i vettori di caratteri.
 
 #### Raccomandazioni con analisi della trama:
 ##### Input:
@@ -80,7 +80,7 @@ Andiamo ad analizzare la correttezza dei risultati. Le trame e i dati sono presi
 
 #### Altre raccomandazioni
 È inoltre possibile inserire nel sistema molteplici film. In quel caso verrà fatta una media di punti in comune tra le trame e verranno calcolati dei risultati che hanno maggior pertinenza con il maggior numero di elementi in comune tra i film (sia per trama che per metadati).
-Per non dilungarci troppo, lasciamo riportati qui due esempi di output con lo stesso input, senza però lasciare trame o metadati, lasciando al lettore il compito di approfondire nel caso lo ritenesse interessante (o non conoscesse i titoli di cui si parla).
+Per non dilungarci troppo, lascio riportati qui due esempi di output con lo stesso input, senza però lasciare trame o metadati, lasciando al lettore il compito di approfondire nel caso lo ritenesse interessante (o non conoscesse i titoli di cui si parla).
 
 ##### Film in input
 - Harry Potter and the half bloody prince
@@ -114,7 +114,7 @@ Il dataset da noi usato è formato da due file .csv: credits (che contiene tutti
 
 Per caricare i dataset è stata utilizzata la libreria [pandas](https://pandas.pydata.org/),  un veloce, semplice, flessibile nonché potente sistema di analisi e manipolazione dei dati open source e scritto in python.
 
-Ovviamente i nostri dataset contengono molti più dati e informazioni di quante ce ne servano realmente. Dunque, sono stati applicati dei filtri ed è stata creata un'unica matrice contenente i dati di nostro interesse.
+Ovviamente i dataset contengono molti più dati e informazioni di quante ne servano realmente. Dunque, sono stati applicati dei filtri ed è stata creata un'unica matrice contenente i dati interessanti.
 
     credits.columns = ['id','title','cast','crew']
     movies = movies.merge(credits, on="id")
@@ -132,7 +132,7 @@ La funzione get_recommendations()  prende il titolo del film e le funzioni di si
 - Mappa gli indici ai rispettivi titoli, e ritorna una lista di film
 
 ### Ricerca della soluzione
-Abbiamo analizzato più tecniche di filtro di contenuti. Abbiamo preso in considerazione prevalentemente due aree ben diverse:
+Ho analizzato più tecniche di filtro di contenuti e preso in considerazione prevalentemente due aree ben diverse:
 - Content-Based Recommender Systems
 - Collaborative Filtering Recommender Systems
 
@@ -150,18 +150,18 @@ Al contrario, i sistemi a filtraggio collaborativo hanno bisogno di molti dati u
 È basato su principi semplici, è molto adattabile ed è una delle tecniche che hanno letteralmente rivoluzionato il mondo delle raccomandazioni.
 Possono tuttavia fare raccomandazioni basate solo su un tipo di contenuti, dunque nel caso dell'esempio dell'e-commerce sarebbe limitato nell'abilità di fare raccomandazioni su oggetti al difuori dei prodotti appartenenti al suo dataset.
 
-Dunque, principalmente per motivi legati all'immediatezza di riscontro, si è scelto di utilizzare dei sistemi basati su contenuti. In questo modo, una piattaforma può fornire dei buoni risultati immediatamente, senza dover attendere che l'utente prosegua nell'utilizzo per un primo periodo prima di poter avere delle raccomandazioni.
+Dunque, principalmente per motivi legati all'immediatezza di riscontro, ho scelto di utilizzare dei sistemi basati su contenuti. In questo modo, una piattaforma può fornire dei buoni risultati immediatamente, senza dover attendere che l'utente prosegua nell'utilizzo per un primo periodo prima di poter avere delle raccomandazioni.
 
 
 ## Risultati sperimentali
 
 ### Elenco delle tecnologie usate per gli esperimenti
 Il caso da noi preso in considerazione necessita di un'analisi umana per stimare la qualità dei risultati.
-Abbiamo dunque utilizzato dei semplici fogli di calcolo dove, dopo aver sottoposto a più persone la lista di correlazioni, abbiamo fatto una media dei voti sui singoli risultati, per poi calcolare una media totale sui risultati utilizzando le funzioni di media.
-Abbiamo poi utilizzato Python per ottenere risultati da altri algoritmi, sottoponendoli allo stesso trattamento per poter trarre conclusioni sulle differenze tra il nostro metodo, e quelli già presenti in letteratura.
+Ho dunque utilizzato dei semplici fogli di calcolo dove, dopo aver sottoposto a più persone la lista di correlazioni, fatto una media dei voti sui singoli risultati, per poi calcolare una media totale sui risultati utilizzando le funzioni di media.
+Ho poi utilizzato Python per ottenere risultati da altri algoritmi, sottoponendoli allo stesso trattamento per poter trarre conclusioni sulle differenze tra il mio metodo, e quelli già presenti in letteratura.
 
 ### Descrizione del metodo per la misurazione delle performance
-Per valutare le performance del nostro sistema abbiamo utilizzato la precisione seguendo la formula:
+Per valutare le performance del sistema ho utilizzato la precisione seguendo la formula:
 
 ***Precision = Consigliati Rilevanti/Consigliati***
 
@@ -171,27 +171,27 @@ Per effettuare la misurazione i titoli rilevanti sono stati indicati caso per ca
 ### Risultati della configurazione migliore
 
 ### Studio di ablazione
-Abbiamo realizzato due diversi modelli per l'ottenimento dei dati da analizzare: 
+Ho realizzato due diversi modelli per l'ottenimento dei dati da analizzare: 
 Il primo modello prendeva in input un titolo casuale dalla lista, ritornando 10 risultati, il secondo invece prendeva in input 5 film casuali dalla lista, ritornando sempre 10 risultati.
-Abbiamo assegnato un valore da 0 a 10 per pertinenza di correlazione tra i titoli dei film in input rispetto ai titoli dei film ritornati dal programma. Questa analisi è stata portata avanti sia per i risultati ritornati dall'analisi della similarità di trama, che dall'analisi dei risultati per similarità di metadati.
+Ho assegnato un valore da 0 a 10 per pertinenza di correlazione tra i titoli dei film in input rispetto ai titoli dei film ritornati dal programma. Questa analisi è stata portata avanti sia per i risultati ritornati dall'analisi della similarità di trama, che dall'analisi dei risultati per similarità di metadati.
 I risultati sono osservabili nella tabella presente nel file *valutazione_precisione.xslx* nella root del repository.
 
 ### Studio di comparazione
-Abbiamo dunque proceduto ad analizzare le differenze tra il nostro metodo e il metodo illustrato in [Distributed Representations of Sentences and Documents](http://proceedings.mlr.press/v32/le14.html?ref=https://githubhelp.com) (da ora DRSD).
+Ho dunque proceduto ad analizzare le differenze tra il mio metodo e il metodo illustrato in [Distributed Representations of Sentences and Documents](http://proceedings.mlr.press/v32/le14.html?ref=https://githubhelp.com) (da ora DRSD).
 Lo studio è osservabile nel documento *valutazione_neural_network.xlsx* nella root del repository.
-L'algoritmo preso da DRSD restituisce i risultati analizzando i testi delle trame. Andremo ora a comparare i risultati in una tabella.
+L'algoritmo preso da DRSD restituisce i risultati analizzando i testi delle trame.
 
 | TRAMA_ANDREA    | METADATI_ANDREA| TRAMA_DRSD          |
 |---------------------|-------------------|---------------------|
 | 60.8% input singolo | 71% input singolo | 22.6% input singolo |
 | 66.2% 5 input       | 67.2% 5 input     | 33.8% 5 input       |
 
-Come si può osservare, i risultati del nostro algoritmo sono sensibilmente più precisi.
+Come si può osservare, i risultati del mio algoritmo sono sensibilmente più precisi.
 
 ## Discussione e conclusioni
 
 ### Discussione dei risultati ottenuti
-Abbiamo utilizzato Python 3, utilizzando delle librerie utili allo scopo, quali SciKitLearn, Pandas e NumPy. Nello specifico:
+Ho utilizzato Python 3, utilizzando delle librerie utili allo scopo, quali SciKitLearn, Pandas e NumPy. Nello specifico:
 - SciKitLearn per ottenere vettorializzare le stringhe delle descrizioni (contenute all'interno dei nostri file CSV presi da TheMovieDataBase.org)
 - Pandas per gestire i dati in input
 - NumPy per la parte di calcolo sui vettori, come ad esempio il calcolo della distanza di editing 
