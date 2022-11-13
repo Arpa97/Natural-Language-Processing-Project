@@ -1,9 +1,9 @@
+from os.path import exists
+
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import linear_kernel
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
 
@@ -78,8 +78,8 @@ def collapse(L):
 if (exists("finalMovie.csv")) :
     movies = pd.read_csv("finalMovie.csv")
 else :
-    credits = pd.read_csv("tmdb_credits.csv")
-    movies = pd.read_csv("tmdb_movies.csv")
+    credits = pd.read_csv("archive/tmdb_credits.csv")
+    movies = pd.read_csv("archive/tmdb_movies.csv")
 
     #merging tables
     credits.columns = ['id', 'titlec', 'cast', 'crew']
