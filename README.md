@@ -153,7 +153,9 @@ La funzione get_recommendations()  prende il titolo del film e le matrici di sim
 -  Ordina la lista di tuple in ordine discendente basandosi sul punteggio di similarità
 - Ottiene l'indice della top 10 film dalla lista appena ordinata, escludendo il primo titolo che è il film scelto per la comparazione
 - Mappa gli indici ai rispettivi titoli, e ritorna una lista di film
-	
+
+.
+
 	idx = indices[title]
 	similarity_scores = list(enumerate(cosine_sim[idx]))
 	similarity_scores= sorted(similarity_scores, key=lambda x: x[1], reverse=True)
