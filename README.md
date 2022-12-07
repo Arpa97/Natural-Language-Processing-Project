@@ -118,18 +118,50 @@ Ovviamente i dataset contengono molti più dati e informazioni di quante ne serv
 
     credits.columns = ['id','title','cast','crew']
     movies = movies.merge(credits, on="id")
+    
+Una volta ottenuta la nostra matrice contenente le informazioni di cui sopra, andiamo a formattare i nostri dati legandoli ai tipi di dati corretti:
+cast, crew, keyword, director e genere.
+Quindi andiamo a creare una "zuppa", ovvero una rappresentazione navigabile dei dati.
+
+A questo punto creiamo la matrice dei termini andando ad analizzare il dizionario dei vocaboli nel nostro dataset e calcoliamo la coseno similarità tra le varie entry della nostra matrice
+	
+	count_vectorizer = CountVectorizer(stop_words="english")
+	count_matrix = count_vectorizer.fit_transform(movies["soup"])
+	cosine_sim2 = cosine_similarity(count_matrix, count_matrix)
+
+A questo punto possiamo vedere le similarità dei campi, andando ad annalizzare i metadati del film. Il metodo appena raccontato si occupa di ritornare il nostro "metro di paragone" per l'accuratezza del nostro metodo di analisi delle trame.
+
+A questo punto andiamo a creare (tramite la libreria sklearn) il nostro TfidfVectorizer.
+Il TfidfVectorizer non è altro che un "vettorizzatore" che applica la funzione di peso tf-idf (term frequency–inverse document frequency), una funzione utilizzata in information retrieval per misurare l'importanza di un termine rispetto ad un documento o ad una collezione di documenti. Questa aumenta proporzionalmente al numero di volte che il termine è contenuto nel documento, ma cresce in maniera inversamente proporzionale con la frequenza del termine nella collezione. L'idea alla base di questo comportamento è di dare più importanza ai termini che compaiono nel documento, ma che in generale sono poco frequenti.
+
+	tfidf = TfidfVectorizer(stop_words="english")
+	movies["overview"] = movies["overview"].fillna("")
+	tfidf_matrix = tfidf.fit_transform(movies["overview"])
+	cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+Il Vettorizatore, a differenza del metodo precedente, prende solo il campo "overview" della matrice, ovvero il campo contenente la trama in inglese.
+Dopo la vettorizzazione, anche in questo caso si è calcolata la coseno similarità per la matrice tfidf.
 
 #### Il reccomender
 Una volta manipolati i dati, si può passare alla costruzione effettiva del sistema di raccomandazione.
 
 
-La funzione get_recommendations()  prende il titolo del film e le funzioni di similarità come input. Segue i passaggi qui sotto spiegati per fare delle raccomandazioni:
+La funzione get_recommendations()  prende il titolo del film e le matrici di similarità come input. Segue i passaggi qui sotto spiegati per fare delle raccomandazioni:
 -   Ottiene l'indice del film utilizzando il suo titolo.
 - Ottiene una lista di punteggi di similarità con il film scelto rispetto a tutti i film
 -  Crea delle tuple con il primo elemento come indice e il secondo il punteggio di coseno-similarità
 -  Ordina la lista di tuple in ordine discendente basandosi sul punteggio di similarità
 - Ottiene l'indice della top 10 film dalla lista appena ordinata, escludendo il primo titolo che è il film scelto per la comparazione
 - Mappa gli indici ai rispettivi titoli, e ritorna una lista di film
+	
+	idx = indices[title]
+	similarity_scores = list(enumerate(cosine_sim[idx]))
+	similarity_scores= sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+	similarity_scores= similarity_scores[1:11]
+	# (a, b) where a is id of movie, b is similarity_scores
+	movies_indices = [ind[0] for ind in similarity_scores]
+	moviesT = movies["id"].iloc[movies_indices]
+	return moviesT
 
 ### Ricerca della soluzione
 Ho analizzato più tecniche di filtro di contenuti e preso in considerazione prevalentemente due aree ben diverse:
