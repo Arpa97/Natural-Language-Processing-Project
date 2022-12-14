@@ -107,10 +107,14 @@ L' algoritmo si sviluppa prevalentemente in 2 fasi:
 
  1. Analisi dei dati:
 	 - Si  effettua l'analisi dei dati usando tecniche di Exploratory Data Analysis (EDA)
+	 
  2. Si costruisce il sistema di raccomandazione e si stampano i risultati ottenuti
 
 #### Analisi dei dati
 Il modello usato è fornito dalla libreria "scikitlearn" ed è pre-trainato utilizzando training non supervisionato sul dataset di Wikipedia in inglese con tecniche di Clustering Partizionale.
+
+Ho tentato di aumentare la precisione del sistema utilizzando un dataset diverso di trame fornito da imdb, utilizzando un diverso modello che supportasse training e utilizzando la tecnica di few-shot.
+Utilizzando il modello pretrainato di gensim che implementa il metodo doc2vec e poi facendo few-shot utilizzando il dataset di imdb, ho potuto constatare come, anche con un training ad alto numero di epoche, la precisione del metodo proposto sia sensibilmente più alta.
 
 Il dataset usato è formato da due file .csv: credits (che contiene tutti i metadati sul film) e movies (che contiene informazioni come nome, id, budget, lingue, ...)
 
